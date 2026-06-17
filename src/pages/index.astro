@@ -1,0 +1,839 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const navLinks = [
+  { label: "O salonie", href: "#o-salonie" },
+  { label: "Zabiegi", href: "#zabiegi" },
+  { label: "Opinie", href: "#opinie" },
+  { label: "Kontakt", href: "#kontakt" },
+];
+
+const services = {
+  twarz: [
+    { name: "Rytuał odmładzający", desc: "Głęboka regeneracja skóry z serum peptydowym", price: "320 zł" },
+    { name: "Mikrodermoabrazja diamentowa", desc: "Wygładzenie i rozjaśnienie cery z masażem", price: "280 zł" },
+    { name: "Mezoterapia igłowa", desc: "Intensywne nawilżenie i liftingowanie", price: "450 zł" },
+    { name: "Peeling chemiczny", desc: "Kwasy AHA/BHA — wyrównanie kolorytu", price: "260 zł" },
+    { name: "Laminacja brwi", desc: "Modelowanie i stylizacja łuków brwiowych", price: "180 zł" },
+    { name: "Lifting rzęs", desc: "Trwałe podkręcenie i wydłużenie rzęs", price: "150 zł" },
+  ],
+  cialo: [
+    { name: "Masaż Lomi Lomi", desc: "Hawajski masaż relaksacyjny ciałem i dłońmi", price: "380 zł" },
+    { name: "Rytuał Hammam", desc: "Peelingowanie, maska z gliny i masaż aromatyczny", price: "420 zł" },
+    { name: "Drenaż limfatyczny", desc: "Redukcja obrzęków i pobudzenie krążenia", price: "290 zł" },
+    { name: "Okłady algowe", desc: "Nawilżenie, mineralizacja i detoks skóry", price: "310 zł" },
+    { name: "Modelowanie sylwetki", desc: "Masaż antycellulitowy z olejkami", price: "260 zł" },
+    { name: "Masaż gorącymi kamieniami", desc: "Relaks i rozluźnienie głębokich napięć", price: "350 zł" },
+  ],
+  dlonie: [
+    { name: "Manicure klasyczny", desc: "Pielęgnacja i lakierowanie paznokci", price: "80 zł" },
+    { name: "Manicure hybrydowy", desc: "Hybryda — trwałość do 3 tygodni", price: "110 zł" },
+    { name: "Rytuał dłoni", desc: "Peeling, masaż, odżywcza maska i lakier", price: "160 zł" },
+    { name: "Pedicure SPA", desc: "Kąpiel ziołowa, peelingowanie, masaż stóp", price: "140 zł" },
+    { name: "Pedicure hybrydowy", desc: "Pielęgnacja z hybrydowym lakierem", price: "160 zł" },
+    { name: "Rytuał stóp", desc: "Luksusowy rytuał z maseczką i masażem łydek", price: "200 zł" },
+  ],
+};
+
+const reviews = [
+  {
+    name: "Magdalena W.",
+    text: "Absolutnie wyjątkowe miejsce. Mezoterapia zmieniła moją skórę nie do poznania — po czterech wizytach wygląda jak po dziesięciu latach młodziej. Atmosfera jak w ekskluzywnym SPA paryskim.",
+    service: "Mezoterapia igłowa",
+    stars: 5,
+  },
+  {
+    name: "Katarzyna B.",
+    text: "Rytuał Lomi Lomi to najlepsze dwie godziny, jakie sobie sprawiłam od lat. Pani Marta ma wyjątkowy talent — po masażu poczułam się jakby ktoś zresetował moje ciało i umysł.",
+    service: "Masaż Lomi Lomi",
+    stars: 5,
+  },
+  {
+    name: "Joanna K.",
+    text: "Salon, który naprawdę dba o każdy detal. Białe orchidee, aromaterapia, herbata przed zabiegiem — czujesz się jak księżna. Manicure hybrydowy trzyma się perfekcyjnie już czwarty tydzień.",
+    service: "Manicure hybrydowy",
+    stars: 5,
+  },
+  {
+    name: "Aleksandra M.",
+    text: "Peeling chemiczny zrobiony bardzo profesjonalnie z pełnym omówieniem pielęgnacji. Widać, że kosmetyczki tu to ekspertki, nie tylko estetki. Wróciłam już trzy razy i wróciłam jeszcze.",
+    service: "Peeling chemiczny",
+    stars: 5,
+  },
+];
+---
+
+<Layout>
+  <!-- ===== NAVIGATION ===== -->
+  <header
+    id="nav"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+    style="background: transparent;"
+  >
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="#" class="flex flex-col leading-none group">
+        <span
+          class="text-2xl tracking-widest uppercase"
+          style="font-family: var(--font-body); font-weight: 300; color: var(--color-dark); letter-spacing: 0.25em;"
+        >Aura</span>
+        <span
+          class="text-xs tracking-[0.4em] uppercase"
+          style="color: var(--color-taupe); font-family: var(--font-body); font-weight: 400;"
+        >Beauty</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-10">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm tracking-widest uppercase transition-colors duration-300"
+            style="font-family: var(--font-body); font-weight: 400; color: var(--color-darksoft); letter-spacing: 0.18em;"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA button -->
+      <a
+        href="#rezerwacja"
+        class="hidden md:inline-flex items-center gap-2 px-7 py-3 text-xs tracking-widest uppercase transition-all duration-300"
+        style="background: var(--color-dark); color: var(--color-cream); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;"
+      >
+        Umów wizytę
+      </a>
+
+      <!-- Burger -->
+      <button
+        id="burger"
+        class="md:hidden flex flex-col gap-1.5 p-2"
+        aria-label="Menu"
+      >
+        <span class="block w-6 h-px" style="background: var(--color-dark);"></span>
+        <span class="block w-4 h-px" style="background: var(--color-dark);"></span>
+        <span class="block w-6 h-px" style="background: var(--color-dark);"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden"
+      style="background: var(--color-cream); border-top: 1px solid var(--color-line);"
+    >
+      <div class="px-6 py-8 flex flex-col gap-6">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-base tracking-widest uppercase"
+            style="font-family: var(--font-body); font-weight: 400; color: var(--color-dark); letter-spacing: 0.2em;"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="#rezerwacja"
+          class="inline-flex items-center justify-center px-7 py-3.5 text-xs tracking-widest uppercase mt-2"
+          style="background: var(--color-dark); color: var(--color-cream); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;"
+        >
+          Umów wizytę
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section
+    id="hero"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    style="background: var(--color-dark);"
+  >
+    <!-- Background image -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1800&q=80"
+        alt="Wnętrze salonu Aura Beauty"
+        class="w-full h-full object-cover"
+        style="opacity: 0.55;"
+      />
+      <!-- Gradient overlay for contrast -->
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(135deg, color-mix(in srgb, var(--color-dark) 70%, transparent) 0%, color-mix(in srgb, var(--color-dark) 30%, transparent) 60%, color-mix(in srgb, var(--color-blush) 20%, transparent) 100%);"
+      ></div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <!-- Pre-heading -->
+      <p
+        class="text-xs tracking-[0.4em] uppercase mb-8 reveal"
+        style="color: var(--color-blush); font-family: var(--font-body); font-weight: 400;"
+      >
+        Salon Kosmetyczny &amp; SPA · Warszawa
+      </p>
+
+      <!-- Main heading -->
+      <h1
+        class="mb-6 reveal reveal-delay-1"
+        style="font-family: var(--font-display); font-weight: 400; color: var(--color-cream); font-size: clamp(3rem, 8vw, 7rem); line-height: 1.05; letter-spacing: -0.01em;"
+      >
+        Twoja skóra<br/>
+        <em style="color: var(--color-blush);">zasługuje</em><br/>
+        na luksus
+      </h1>
+
+      <!-- Subheading -->
+      <p
+        class="text-lg mb-12 max-w-xl mx-auto reveal reveal-delay-2"
+        style="color: color-mix(in srgb, var(--color-cream) 75%, transparent); font-family: var(--font-body); font-weight: 300; line-height: 1.7;"
+      >
+        Odkryj rytuały piękna tworzone z myślą o Tobie.
+        Profesjonalne zabiegi, które odnawiają i rozświetlają.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal reveal-delay-3">
+        <a
+          href="#rezerwacja"
+          class="inline-flex items-center gap-3 px-10 py-4 text-xs tracking-widest uppercase transition-all duration-300 hover:opacity-90"
+          style="background: var(--color-blush); color: var(--color-dark); font-family: var(--font-body); font-weight: 500; letter-spacing: 0.2em;"
+        >
+          Umów wizytę
+          <span style="color: var(--color-taupe);">→</span>
+        </a>
+        <a
+          href="#zabiegi"
+          class="inline-flex items-center gap-3 px-10 py-4 text-xs tracking-widest uppercase border transition-all duration-300"
+          style="border-color: color-mix(in srgb, var(--color-cream) 30%, transparent); color: var(--color-cream); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.2em;"
+        >
+          Nasze zabiegi
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 reveal reveal-delay-5">
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-xs tracking-widest uppercase" style="color: color-mix(in srgb, var(--color-cream) 45%, transparent); font-family: var(--font-body);">Przewiń</span>
+          <div class="w-px h-12 overflow-hidden" style="background: color-mix(in srgb, var(--color-cream) 20%, transparent);">
+            <div class="w-full animate-bounce" style="background: var(--color-blush); height: 50%; margin-top: -50%; animation: scrollLine 1.8s ease-in-out infinite;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== O SALONIE ===== -->
+  <section id="o-salonie" class="py-32 lg:py-40 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <!-- Images collage -->
+        <div class="relative reveal">
+          <div class="relative">
+            <img
+              src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+              alt="Zabieg w salonie Aura Beauty"
+              class="w-full object-cover"
+              style="height: 520px; background: var(--color-blush);"
+            />
+            <!-- Floating accent card -->
+            <div
+              class="absolute -bottom-8 -right-6 lg:-right-10 p-7 shadow-xl"
+              style="background: var(--color-cream); border: 1px solid var(--color-line); max-width: 220px;"
+            >
+              <p class="text-4xl mb-1" style="font-family: var(--font-display); font-weight: 500; color: var(--color-gold);">12+</p>
+              <p class="text-xs tracking-widest uppercase" style="color: var(--color-taupe); font-family: var(--font-body);">lat doświadczenia</p>
+              <div class="mt-3 w-8 h-px" style="background: var(--color-gold);"></div>
+              <p class="text-xs mt-2" style="color: var(--color-taupe); font-family: var(--font-body); font-weight: 300; line-height: 1.5;">Ponad 4 000 zadowolonych klientek</p>
+            </div>
+          </div>
+          <!-- Decorative element -->
+          <div
+            class="absolute -top-6 -left-6 w-24 h-24"
+            style="border: 1px solid var(--color-nude); z-index: -1;"
+          ></div>
+        </div>
+
+        <!-- Text content -->
+        <div class="lg:pl-8">
+          <p class="text-xs tracking-[0.35em] uppercase mb-5 reveal" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">O nas</p>
+          <h2
+            class="mb-6 reveal reveal-delay-1"
+            style="font-family: var(--font-display); font-weight: 500; font-size: clamp(2.4rem, 4vw, 3.6rem); line-height: 1.1; color: var(--color-dark);"
+          >
+            Piękno w każdym<br/>
+            <em>szczególe</em>
+          </h2>
+          <div class="w-10 h-px mb-8 reveal reveal-delay-2" style="background: var(--color-gold);"></div>
+          <p class="mb-5 reveal reveal-delay-2" style="font-family: var(--font-body); font-weight: 300; font-size: 1.05rem; line-height: 1.8; color: var(--color-darksoft);">
+            Aura Beauty to miejsce, gdzie czas zatrzymuje się w biegu — kameralny salon z duszą, w którym każda wizyta jest starannie zaplanowanym rytuałem. Działamy w sercu Warszawy od 2012 roku.
+          </p>
+          <p class="mb-10 reveal reveal-delay-3" style="font-family: var(--font-body); font-weight: 300; font-size: 1.05rem; line-height: 1.8; color: var(--color-darksoft);">
+            Nasz zespół to certyfikowane kosmetyczki i terapeutki SPA, które łączą wiedzę medyczną z artystycznym podejściem do piękna. Używamy wyłącznie preparatów premium: La Mer, Biologique Recherche i Sisley.
+          </p>
+
+          <!-- Features -->
+          <div class="grid grid-cols-2 gap-6 reveal reveal-delay-4">
+            {[
+              { icon: "✦", label: "Certyfikowane kosmetyczki" },
+              { icon: "✦", label: "Preparaty premium" },
+              { icon: "✦", label: "Indywidualne podejście" },
+              { icon: "✦", label: "Kameralna atmosfera" },
+            ].map((f) => (
+              <div class="flex items-start gap-3">
+                <span class="text-xs mt-0.5 flex-shrink-0" style="color: var(--color-gold);">{f.icon}</span>
+                <span class="text-sm" style="font-family: var(--font-body); font-weight: 400; color: var(--color-darksoft); letter-spacing: 0.02em;">{f.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ZABIEGI ===== -->
+  <section
+    id="zabiegi"
+    class="py-32 lg:py-40 px-6"
+    style="background: linear-gradient(180deg, var(--color-blush) 0%, color-mix(in srgb, var(--color-blush) 25%, var(--color-cream)) 100%);"
+  >
+    <div class="max-w-7xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-20">
+        <p class="text-xs tracking-[0.35em] uppercase mb-5 reveal" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Menu zabiegów</p>
+        <h2
+          class="mb-4 reveal reveal-delay-1"
+          style="font-family: var(--font-display); font-weight: 500; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--color-dark);"
+        >
+          Rytuały dla ciała<br/>
+          <em>i ducha</em>
+        </h2>
+        <p class="max-w-lg mx-auto reveal reveal-delay-2" style="font-family: var(--font-body); font-weight: 300; font-size: 1rem; line-height: 1.8; color: var(--color-taupe);">
+          Każdy zabieg to unikalne doświadczenie zmysłowe. Zadbaj o siebie w sposób, na jaki zasługujesz.
+        </p>
+      </div>
+
+      <!-- Tabs / Categories -->
+      <div class="mb-16 reveal">
+        <div id="tabs" class="flex justify-center gap-2 flex-wrap">
+          {[
+            { id: "twarz", label: "Zabiegi na twarz" },
+            { id: "cialo", label: "Zabiegi na ciało" },
+            { id: "dlonie", label: "Dłonie i stopy" },
+          ].map((tab, i) => (
+            <button
+              data-tab={tab.id}
+              class={`tab-btn px-6 py-3 text-xs tracking-widest uppercase border transition-all duration-300 ${i === 0 ? "tab-active" : ""}`}
+              style={i === 0
+                ? "background: var(--color-dark); color: var(--color-cream); border-color: var(--color-dark); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;"
+                : "background: transparent; color: var(--color-taupe); border-color: var(--color-nude); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;"}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Services grid — twarz -->
+      <div id="panel-twarz" class="tab-panel grid md:grid-cols-2 lg:grid-cols-3 gap-px" style="background: var(--color-nude);">
+        {services.twarz.map((s, i) => (
+          <div
+            class={`p-8 reveal reveal-delay-${Math.min(i + 1, 6)}`}
+            style="background: var(--color-cream);"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <h3 style="font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; color: var(--color-dark); line-height: 1.2;">{s.name}</h3>
+              <span class="ml-4 flex-shrink-0 text-sm font-medium" style="color: var(--color-gold); font-family: var(--font-body);">{s.price}</span>
+            </div>
+            <p class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: var(--color-taupe); line-height: 1.6;">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Services grid — cialo -->
+      <div id="panel-cialo" class="tab-panel hidden grid md:grid-cols-2 lg:grid-cols-3 gap-px" style="background: var(--color-nude);">
+        {services.cialo.map((s, i) => (
+          <div
+            class={`p-8 reveal reveal-delay-${Math.min(i + 1, 6)}`}
+            style="background: var(--color-cream);"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <h3 style="font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; color: var(--color-dark); line-height: 1.2;">{s.name}</h3>
+              <span class="ml-4 flex-shrink-0 text-sm font-medium" style="color: var(--color-gold); font-family: var(--font-body);">{s.price}</span>
+            </div>
+            <p class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: var(--color-taupe); line-height: 1.6;">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Services grid — dlonie -->
+      <div id="panel-dlonie" class="tab-panel hidden grid md:grid-cols-2 lg:grid-cols-3 gap-px" style="background: var(--color-nude);">
+        {services.dlonie.map((s, i) => (
+          <div
+            class={`p-8 reveal reveal-delay-${Math.min(i + 1, 6)}`}
+            style="background: var(--color-cream);"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <h3 style="font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; color: var(--color-dark); line-height: 1.2;">{s.name}</h3>
+              <span class="ml-4 flex-shrink-0 text-sm font-medium" style="color: var(--color-gold); font-family: var(--font-body);">{s.price}</span>
+            </div>
+            <p class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: var(--color-taupe); line-height: 1.6;">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-14 reveal">
+        <a
+          href="#rezerwacja"
+          class="inline-flex items-center gap-3 px-10 py-4 text-xs tracking-widest uppercase transition-all duration-300 hover:opacity-85"
+          style="background: var(--color-dark); color: var(--color-cream); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.2em;"
+        >
+          Zarezerwuj zabieg
+          <span style="color: var(--color-blush);">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OPINIE ===== -->
+  <section id="opinie" class="py-32 lg:py-40 px-6" style="background: var(--color-cream);">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-20">
+        <p class="text-xs tracking-[0.35em] uppercase mb-5 reveal" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Opinie</p>
+        <h2
+          class="reveal reveal-delay-1"
+          style="font-family: var(--font-display); font-weight: 500; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--color-dark);"
+        >
+          Co mówią<br/>
+          <em>nasze klientki</em>
+        </h2>
+      </div>
+
+      <!-- Reviews grid -->
+      <div class="grid md:grid-cols-2 gap-8">
+        {reviews.map((r, i) => (
+          <div
+            class={`p-10 reveal reveal-delay-${i + 1}`}
+            style="border: 1px solid var(--color-line); background: var(--color-cream); position: relative;"
+          >
+            <!-- Quote mark -->
+            <span
+              class="absolute top-6 right-8 text-6xl leading-none select-none"
+              style="font-family: var(--font-display); color: var(--color-blush); opacity: 0.5;"
+            >"</span>
+            <!-- Stars -->
+            <div class="flex gap-1 mb-6">
+              {Array(r.stars).fill(null).map(() => (
+                <span class="text-xs" style="color: var(--color-gold);">★</span>
+              ))}
+            </div>
+            <!-- Review text -->
+            <p
+              class="mb-8 leading-relaxed"
+              style="font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; color: var(--color-dark); line-height: 1.7; font-style: italic;"
+            >
+              "{r.text}"
+            </p>
+            <!-- Author -->
+            <div class="flex items-center gap-4 pt-6" style="border-top: 1px solid var(--color-line);">
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                style="background: var(--color-blush);"
+              >
+                <span style="font-family: var(--font-display); font-size: 1.1rem; color: var(--color-taupe);">{r.name[0]}</span>
+              </div>
+              <div>
+                <p class="text-sm font-medium" style="font-family: var(--font-body); color: var(--color-dark);">{r.name}</p>
+                <p class="text-xs" style="font-family: var(--font-body); font-weight: 300; color: var(--color-taupe);">{r.service}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REZERWACJA ===== -->
+  <section
+    id="rezerwacja"
+    class="py-32 lg:py-40 px-6"
+    style="background: var(--color-dark);"
+  >
+    <div class="max-w-3xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-16">
+        <p class="text-xs tracking-[0.35em] uppercase mb-5 reveal" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Rezerwacja</p>
+        <h2
+          class="mb-4 reveal reveal-delay-1"
+          style="font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--color-cream);"
+        >
+          Zarezerwuj<br/>
+          <em style="color: var(--color-blush);">swój rytuał</em>
+        </h2>
+        <p class="reveal reveal-delay-2" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 60%, transparent); line-height: 1.7;">
+          Wypełnij formularz, a my skontaktujemy się z Tobą w ciągu 24 godzin, by potwierdzić termin.
+        </p>
+      </div>
+
+      <!-- Booking form -->
+      <form id="booking-form" class="reveal reveal-delay-3 grid gap-5">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs tracking-widest uppercase mb-2" style="color: var(--color-taupe); font-family: var(--font-body); letter-spacing: 0.15em;">Imię i nazwisko</label>
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="np. Anna Kowalska"
+              class="w-full px-5 py-4 text-sm border transition-all duration-300"
+              style="background: color-mix(in srgb, var(--color-cream) 5%, transparent); border-color: color-mix(in srgb, var(--color-taupe) 40%, transparent); color: var(--color-cream); font-family: var(--font-body); font-weight: 300;"
+            />
+          </div>
+          <div>
+            <label class="block text-xs tracking-widest uppercase mb-2" style="color: var(--color-taupe); font-family: var(--font-body); letter-spacing: 0.15em;">Numer telefonu</label>
+            <input
+              type="tel"
+              name="phone"
+              required
+              placeholder="+48 600 000 000"
+              class="w-full px-5 py-4 text-sm border transition-all duration-300"
+              style="background: color-mix(in srgb, var(--color-cream) 5%, transparent); border-color: color-mix(in srgb, var(--color-taupe) 40%, transparent); color: var(--color-cream); font-family: var(--font-body); font-weight: 300;"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs tracking-widest uppercase mb-2" style="color: var(--color-taupe); font-family: var(--font-body); letter-spacing: 0.15em;">Wybrany zabieg</label>
+          <select
+            name="service"
+            required
+            class="w-full px-5 py-4 text-sm border transition-all duration-300 appearance-none"
+            style="background: color-mix(in srgb, var(--color-cream) 5%, transparent); border-color: color-mix(in srgb, var(--color-taupe) 40%, transparent); color: var(--color-cream); font-family: var(--font-body); font-weight: 300;"
+          >
+            <option value="" disabled selected style="color: var(--color-dark);">Wybierz zabieg...</option>
+            <optgroup label="Zabiegi na twarz" style="color: var(--color-dark);">
+              {services.twarz.map(s => <option value={s.name} style="color: var(--color-dark);">{s.name} — {s.price}</option>)}
+            </optgroup>
+            <optgroup label="Zabiegi na ciało" style="color: var(--color-dark);">
+              {services.cialo.map(s => <option value={s.name} style="color: var(--color-dark);">{s.name} — {s.price}</option>)}
+            </optgroup>
+            <optgroup label="Dłonie i stopy" style="color: var(--color-dark);">
+              {services.dlonie.map(s => <option value={s.name} style="color: var(--color-dark);">{s.name} — {s.price}</option>)}
+            </optgroup>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs tracking-widest uppercase mb-2" style="color: var(--color-taupe); font-family: var(--font-body); letter-spacing: 0.15em;">Preferowana data i godzina</label>
+          <input
+            type="datetime-local"
+            name="datetime"
+            required
+            class="w-full px-5 py-4 text-sm border transition-all duration-300"
+            style="background: color-mix(in srgb, var(--color-cream) 5%, transparent); border-color: color-mix(in srgb, var(--color-taupe) 40%, transparent); color: var(--color-cream); font-family: var(--font-body); font-weight: 300; color-scheme: dark;"
+          />
+        </div>
+
+        <div class="pt-2">
+          <button
+            type="submit"
+            class="w-full py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-85"
+            style="background: var(--color-blush); color: var(--color-dark); font-family: var(--font-body); font-weight: 500; letter-spacing: 0.2em;"
+          >
+            Wyślij zapytanie
+          </button>
+        </div>
+      </form>
+
+      <!-- Confirmation message -->
+      <div id="form-confirmation" class="hidden text-center py-16">
+        <div class="mb-6 text-4xl" style="color: var(--color-blush);">✦</div>
+        <h3
+          class="mb-4"
+          style="font-family: var(--font-display); font-size: 2.5rem; color: var(--color-cream); font-weight: 400;"
+        >
+          Dziękujemy!
+        </h3>
+        <p style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 65%, transparent); line-height: 1.7;">
+          Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą w ciągu 24 godzin,<br/>
+          by potwierdzić termin wizyty. Do zobaczenia w Aura Beauty!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KONTAKT ===== -->
+  <section id="kontakt" class="py-32 lg:py-40 px-6" style="background: var(--color-cream);">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section header -->
+      <div class="text-center mb-20">
+        <p class="text-xs tracking-[0.35em] uppercase mb-5 reveal" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Znajdź nas</p>
+        <h2
+          class="reveal reveal-delay-1"
+          style="font-family: var(--font-display); font-weight: 500; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--color-dark);"
+        >
+          Kontakt &amp;<br/>
+          <em>godziny otwarcia</em>
+        </h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <!-- Contact info -->
+        <div class="reveal">
+          <div class="grid gap-10">
+            <!-- Address -->
+            <div>
+              <p class="text-xs tracking-widest uppercase mb-3" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Adres</p>
+              <p style="font-family: var(--font-display); font-size: 1.4rem; color: var(--color-dark); line-height: 1.5;">
+                ul. Mokotowska 42/4<br/>
+                00-543 Warszawa
+              </p>
+            </div>
+
+            <!-- Phone & email -->
+            <div class="grid grid-cols-2 gap-8">
+              <div>
+                <p class="text-xs tracking-widest uppercase mb-3" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Telefon</p>
+                <a
+                  href="tel:+48222345678"
+                  class="block transition-colors duration-300 hover:opacity-70"
+                  style="font-family: var(--font-display); font-size: 1.25rem; color: var(--color-dark);"
+                >
+                  +48 22 234 56 78
+                </a>
+              </div>
+              <div>
+                <p class="text-xs tracking-widest uppercase mb-3" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">E-mail</p>
+                <a
+                  href="mailto:kontakt@aura-beauty.pl"
+                  class="block transition-colors duration-300 hover:opacity-70"
+                  style="font-family: var(--font-display); font-size: 1.1rem; color: var(--color-dark);"
+                >
+                  kontakt@aura-beauty.pl
+                </a>
+              </div>
+            </div>
+
+            <!-- Hours -->
+            <div>
+              <p class="text-xs tracking-widest uppercase mb-4" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Godziny otwarcia</p>
+              <div class="grid gap-2">
+                {[
+                  { days: "Poniedziałek – Piątek", hours: "9:00 – 20:00" },
+                  { days: "Sobota", hours: "9:00 – 18:00" },
+                  { days: "Niedziela", hours: "Nieczynne" },
+                ].map((h) => (
+                  <div class="flex justify-between items-center py-2.5" style="border-bottom: 1px solid var(--color-line);">
+                    <span class="text-sm" style="font-family: var(--font-body); font-weight: 400; color: var(--color-darksoft);">{h.days}</span>
+                    <span class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: var(--color-taupe);">{h.hours}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Social media -->
+            <div>
+              <p class="text-xs tracking-widest uppercase mb-4" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Śledź nas</p>
+              <div class="flex gap-5">
+                {["Instagram", "Facebook"].map((s) => (
+                  <a
+                    href="#"
+                    class="text-xs tracking-widest uppercase pb-1 transition-all duration-300"
+                    style="font-family: var(--font-body); font-weight: 400; color: var(--color-taupe); border-bottom: 1px solid var(--color-nude);"
+                  >
+                    {s}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="reveal reveal-delay-2">
+          <div class="relative overflow-hidden" style="height: 480px; background: var(--color-blush);">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=21.003%2C52.215%2C21.035%2C52.235&layer=mapnik&marker=52.225%2C21.019"
+              class="w-full h-full border-0"
+              loading="lazy"
+              title="Mapa — Aura Beauty, ul. Mokotowska 42, Warszawa"
+              style="filter: sepia(0.2) saturate(0.9);"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background: var(--color-dark); border-top: 1px solid color-mix(in srgb, var(--color-taupe) 30%, transparent);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+      <div class="grid md:grid-cols-3 gap-12 mb-12">
+        <!-- Brand -->
+        <div>
+          <div class="mb-4">
+            <span class="block text-xl tracking-widest uppercase" style="font-family: var(--font-body); font-weight: 300; color: var(--color-cream); letter-spacing: 0.25em;">Aura</span>
+            <span class="block text-xs tracking-[0.4em] uppercase" style="color: var(--color-taupe); font-family: var(--font-body);">Beauty</span>
+          </div>
+          <p class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 45%, transparent); line-height: 1.7;">
+            Salon kosmetyczny i SPA<br/>ul. Mokotowska 42/4, Warszawa
+          </p>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <p class="text-xs tracking-widest uppercase mb-5" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Nawigacja</p>
+          <nav class="flex flex-col gap-3">
+            {navLinks.map((link) => (
+              <a
+                href={link.href}
+                class="text-sm transition-colors duration-300 hover:opacity-70"
+                style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 55%, transparent);"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="#rezerwacja"
+              class="text-sm transition-colors duration-300 hover:opacity-70"
+              style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 55%, transparent);"
+            >
+              Rezerwacja
+            </a>
+          </nav>
+        </div>
+
+        <!-- Contact brief -->
+        <div>
+          <p class="text-xs tracking-widest uppercase mb-5" style="color: var(--color-gold); font-family: var(--font-body); font-weight: 400;">Kontakt</p>
+          <div class="flex flex-col gap-3">
+            <a href="tel:+48222345678" class="text-sm transition-colors duration-300 hover:opacity-70" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 55%, transparent);">+48 22 234 56 78</a>
+            <a href="mailto:kontakt@aura-beauty.pl" class="text-sm transition-colors duration-300 hover:opacity-70" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 55%, transparent);">kontakt@aura-beauty.pl</a>
+            <p class="text-sm" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 55%, transparent);">Pon–Pt: 9:00–20:00</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div
+        class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+        style="border-top: 1px solid color-mix(in srgb, var(--color-taupe) 20%, transparent);"
+      >
+        <p class="text-xs" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 30%, transparent);">
+          © 2024 Aura Beauty. Wszelkie prawa zastrzeżone.
+        </p>
+        <p class="text-xs text-center" style="font-family: var(--font-body); font-weight: 300; color: color-mix(in srgb, var(--color-cream) 35%, transparent);">
+          Przykładowa strona zrobiona przez{" "}
+          <a
+            href="https://stronainternetowa.biz"
+            target="_blank"
+            rel="noopener"
+            class="transition-colors duration-300"
+            style="color: var(--color-blush); text-decoration: underline; text-underline-offset: 3px;"
+          >
+            stronainternetowa.biz
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== TAB SCRIPT ===== -->
+  <script>
+    const tabBtns = document.querySelectorAll<HTMLButtonElement>(".tab-btn");
+    const tabPanels = document.querySelectorAll<HTMLElement>(".tab-panel");
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.tab;
+        tabBtns.forEach((b) => {
+          if (b === btn) {
+            b.style.cssText = "background: var(--color-dark); color: var(--color-cream); border-color: var(--color-dark); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;";
+          } else {
+            b.style.cssText = "background: transparent; color: var(--color-taupe); border-color: var(--color-nude); font-family: var(--font-body); font-weight: 400; letter-spacing: 0.18em;";
+          }
+        });
+        tabPanels.forEach((panel) => {
+          if (panel.id === `panel-${target}`) {
+            panel.classList.remove("hidden");
+            // Re-trigger reveal for newly shown items
+            panel.querySelectorAll(".reveal").forEach((el) => {
+              if (!el.classList.contains("is-visible")) {
+                el.classList.add("is-visible");
+              }
+            });
+          } else {
+            panel.classList.add("hidden");
+          }
+        });
+      });
+    });
+  </script>
+</Layout>
+
+<style>
+  /* Nav scrolled — TRAP #2: must be defined here for #nav.scrolled to work */
+  #nav.scrolled {
+    background: color-mix(in srgb, var(--color-cream) 92%, transparent) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-line);
+    box-shadow: 0 2px 24px color-mix(in srgb, var(--color-dark) 6%, transparent);
+  }
+
+  /* Nav link hover */
+  nav a:hover {
+    color: var(--color-dark) !important;
+  }
+
+  /* Input placeholder */
+  input::placeholder,
+  textarea::placeholder {
+    color: color-mix(in srgb, var(--color-taupe) 50%, transparent);
+    font-family: var(--font-body);
+    font-weight: 300;
+  }
+
+  /* Select styling */
+  select option {
+    background: var(--color-cream);
+    color: var(--color-dark);
+  }
+
+  /* Hover card effect on service items */
+  #panel-twarz > div,
+  #panel-cialo > div,
+  #panel-dlonie > div {
+    transition: background 0.3s ease;
+  }
+  #panel-twarz > div:hover,
+  #panel-cialo > div:hover,
+  #panel-dlonie > div:hover {
+    background: color-mix(in srgb, var(--color-blush) 15%, var(--color-cream)) !important;
+  }
+
+  /* Scroll line animation */
+  @keyframes scrollLine {
+    0% { margin-top: -50%; opacity: 0; }
+    30% { opacity: 1; }
+    100% { margin-top: 100%; opacity: 0; }
+  }
+
+  /* Hero CTA hover */
+  a[href="#rezerwacja"]:first-of-type:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Review card hover */
+  #opinie .reveal > div {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #opinie .reveal:hover > div {
+    border-color: var(--color-nude);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--color-dark) 6%, transparent);
+  }
+</style>
