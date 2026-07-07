@@ -17,7 +17,7 @@ Przykładowa strona wizytówkowa dla fikcyjnego salonu kosmetycznego i SPA **Aur
 5. **Opinie** — 4 opinie klientek w stylu editorial
 6. **Rezerwacja** — formularz (imię, telefon, zabieg, termin) z potwierdzeniem
 7. **Kontakt** — adres, godziny, mapa OpenStreetMap iframe
-8. **Footer** — nawigacja, kontakt, credit stronainternetowa.biz
+8. **Footer** — nawigacja, kontakt, credit 100strona.pl
 
 ## Stack
 
